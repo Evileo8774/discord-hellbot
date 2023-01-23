@@ -1,11 +1,11 @@
 const mysql = require("mysql");
 
 const connection = mysql.createConnection({
-    host : "161.97.78.70",
+    host : "localhost",
     port : "3306",
-    user : "u10589_wjBzts8zih",
-    password : "dtWcca+k1HH1E+2dLiCatX7K",
-    database : "s10589_hellBotDatabase",
+    user : "hellbot",
+    password : "hellbot",
+    database : "discord-hellbot",
     charset : "utf8"
 });
 
