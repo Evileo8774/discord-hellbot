@@ -2,12 +2,12 @@ const { SlashCommandBuilder, PermissionsBitField, EmbedBuilder } = require("disc
 const mysql = require("mysql");
 
 const connection = mysql.createConnection({
-    host : "161.97.78.70",
+    host : "192.168.1.22",
     port : "3306",
-    user : "u10589_wjBzts8zih",
-    password : "dtWcca+k1HH1E+2dLiCatX7K",
-    database : "s10589_hellBotDatabase",
-     charset : "utf8"
+    user : "hellbot",
+    password : "hellbot",
+    database : "discord-hellbot",
+    charset : "utf8"
 });
 
 module.exports = {
@@ -86,7 +86,7 @@ module.exports = {
         connection.connect(function(err){
             if (err) throw err;
             //Database management requests
-            connection.query("INSERT INTO logs(guild, username, logType, logDate, reason) VALUES ('"+interaction.guild+"', '"+memberToBan+"', 'ban', '"+today.toISOString().slice(0,10)+"', '"+reason+"')", function (err, result, fields) {
+            connection.query("INSERT INTO sanctions(server, target, executor, type, reason, date) VALUES ('"+interaction.guild+"', '"+memberToBan+"', '"+interaction.user.id+"', 'ban', '"+reason+"', '"+today.toISOString().slice(0,10)+"')", function (err, result, fields) {
                 if (err) throw err;
             });
             connection.end();

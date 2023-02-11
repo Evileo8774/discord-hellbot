@@ -1,8 +1,10 @@
 {
   "dependencies": {
+    "discord": "^0.8.2",
     "discord.js": "^14.7.1",
     "fs": "^0.0.1-security",
     "google-apis": "^1.0.0",
+    "googleapis": "^111.0.0",
     "mysql": "^2.18.1"
   }
 }

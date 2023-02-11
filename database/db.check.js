@@ -1,7 +1,7 @@
 const mysql = require("mysql");
 
 const connection = mysql.createConnection({
-    host : "localhost",
+    host : "192.168.1.22",
     port : "3306",
     user : "hellbot",
     password : "hellbot",
@@ -22,8 +22,6 @@ connection.connect(function(err){
 
 /*
 DATABASE ORGANISATION
-test(testID, username)
-logs(logID, username, logType, logDate, reason)
 
 
 INFOS:
@@ -32,6 +30,4 @@ DATE format : YYYY-MM-DD
 
 Requests history
 
-CREATE TABLE logs (logID INT NOT NULL AUTO_INCREMENT, guild VARCHAR(50) NOT NULL, username VARCHAR(50) NOT NULL, logType VARCHAR(50) NOT NULL, reason VARCHAR(250) NOT NULL, logDate DATE NOT NULL, PRIMARY KEY(logID))
-CREATE EVENT rm_sanction ON SCHEDULE EVERY 1 DAY DO DELETE FROM logs WHERE YEAR(CURDATE()) - 1 = YEAR(logDate) AND MONTH(CURDATE()) = MONTH(logDate) AND DAY(CURDATE()) = DAY(logDate)
 */

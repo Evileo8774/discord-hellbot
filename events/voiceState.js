@@ -9,7 +9,6 @@ module.exports = {
 
         //creates a temporary channel if the joined channel has been created by the bot and moves the user to the new one
         if(newVoiceState.channelId != null){
-            console.log(newVoiceState.guild.channels.cache.get(newVoiceState.channelId));
             const joinedChannel = newVoiceState.guild.channels.cache.get(newVoiceState.channelId);
             const newChannelLimit = joinedChannel.userLimit;
             const category = joinedChannel.parent.id;
@@ -39,9 +38,6 @@ module.exports = {
                     bitrate: 66666
                 });
             }
-
-            console.log(createVoice);
-            console.log(joinedChannel);
 
             //move user
             joinedChannel.members.forEach((member) => {

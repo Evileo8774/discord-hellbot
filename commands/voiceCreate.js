@@ -1,4 +1,4 @@
-const { SlashCommandBuilder,  PermissionsBitField, EmbedBuilder, AuditLogEvent, Events, ChannelType } = require("discord.js");
+const { SlashCommandBuilder,  PermissionsBitField, EmbedBuilder, ChannelType } = require("discord.js");
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -18,16 +18,13 @@ module.exports = {
         .setRequired(true)
         ),
 	async execute(interaction) {
-		
-        //bot's owner ID
-        const ownerID = "398358008838488077";
 
         //get values
         const channelName = interaction.options.getString("nom");
         const channelLimit = interaction.options.getInteger("limite");
         const channelParent = interaction.channel.parent.id;
         
-        //checks if the bot gets perms to mute
+        //checks if the bot gets perms to manage channels
         if(!interaction.guild.members.me.permissions.has(PermissionsBitField.Flags.ManageChannels)){
             return interaction.reply({
                 embeds: [{
@@ -39,6 +36,7 @@ module.exports = {
             });
         }
 
+        //create the channel
         interaction.guild.channels.create({
             name: `${channelName}`,
             parent: channelParent,
@@ -47,14 +45,13 @@ module.exports = {
             bitrate: 66665
         });
 
+        //confirms to the user the channel has been created
         const replyEmbed = new EmbedBuilder()
         .setColor(0xFF0000)
         .setTitle(`Le salon vocal ${channelName} a bien été créé`)
         .setAuthor({name: `Par: ${interaction.user.username}`})
         .setTimestamp()
         .setFooter({text: "hellBot by @Evileo#6462"});
-
-        console.log(`Le channel ${channelName} a bien été créé`);
             
         return interaction.reply({embeds: [replyEmbed]});
             

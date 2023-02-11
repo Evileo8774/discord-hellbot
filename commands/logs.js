@@ -2,12 +2,12 @@ const { SlashCommandBuilder,  PermissionsBitField, EmbedBuilder } = require("dis
 const mysql = require("mysql");
 
 const connection = mysql.createConnection({
-    host : "161.97.78.70",
+    host : "192.168.1.22",
     port : "3306",
-    user : "u10589_wjBzts8zih",
-    password : "dtWcca+k1HH1E+2dLiCatX7K",
-    database : "s10589_hellBotDatabase",
-     charset : "utf8"
+    user : "hellbot",
+    password : "hellbot",
+    database : "discord-hellbot",
+    charset : "utf8"
 });
 
 module.exports = {
@@ -71,7 +71,7 @@ module.exports = {
             connection.connect(function(err){
                 if (err) throw err;
                 //Database management requests
-                connection.query("SELECT logType, reason FROM logs WHERE username = '"+memberLogs+"' AND guild = '"+interaction.guild.id+"'", function (err, result, fields) {
+                connection.query("SELECT type, reason FROM sanctions WHERE target = '"+memberLogs+"' AND server = '"+interaction.guild.id+"'", function (err, result, fields) {
                     if (err) throw err;
                     
                     //loop on results
@@ -79,7 +79,7 @@ module.exports = {
                         //counts amount of sanctions user took
                         totalCount++;
                         //counts amount of sanctions user took sorted by type + adapts reason
-                        switch(result[i].logType){
+                        switch(result[i].type){
                             case "ban":
                                 reasons[reasonsIndex] += "ban: "+result[i].reason+"\n";
                                 banCount++;
@@ -169,7 +169,7 @@ module.exports = {
             connection.connect(function(err){
                 if (err) throw err;
                 
-                connection.query("SELECT reason FROM logs WHERE username = '"+memberLogs+"' AND logType = '"+logType+"' AND guild = '"+interaction.guild.id+"'", function (err, result, fields) {
+                connection.query("SELECT reason FROM sanctions WHERE target = '"+memberLogs+"' AND type = '"+logType+"' AND server = '"+interaction.guild.id+"'", function (err, result, fields) {
                     if (err) throw err;
                     
                     for(i = 0; i < result.length; i++){
