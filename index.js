@@ -3,7 +3,7 @@ const { Client, GatewayIntentBits, Collection, Partials, REST, Routes, Events } 
 const { token, clientId, guildId } = require("./config.json");
 const fs = require("node:fs");
 const path = require("node:path");
-require("./database/db.check.js");
+require("./database/db.connection");
 
 //create a client instance
 const client = new Client({

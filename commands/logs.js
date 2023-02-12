@@ -1,14 +1,8 @@
 const { SlashCommandBuilder,  PermissionsBitField, EmbedBuilder } = require("discord.js");
 const mysql = require("mysql");
+const { connect } = require("../database/db.connection");
 
-const connection = mysql.createConnection({
-    host : "192.168.1.22",
-    port : "3306",
-    user : "hellbot",
-    password : "hellbot",
-    database : "discord-hellbot",
-    charset : "utf8"
-});
+const connection = connect();
 
 module.exports = {
 	data: new SlashCommandBuilder()
