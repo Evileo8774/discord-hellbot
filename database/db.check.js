@@ -13,21 +13,9 @@ connection.connect(function(err){
     if (err) throw err;
     console.log("-- Database connected --");
 
-    //Database management requests
-    /*connection.query("", function (err, result, fields) {
-        if (err) throw err;
-        console.log(result);
-    });*/
+    //keep connection on
+    setInterval(function(){
+        connection.query("SELECT 1");
+    }, 10000);
+    
 });
-
-/*
-DATABASE ORGANISATION
-
-
-INFOS:
-DATE format : YYYY-MM-DD
-
-
-Requests history
-
-*/
