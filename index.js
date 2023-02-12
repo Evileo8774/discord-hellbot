@@ -3,7 +3,6 @@ const { Client, GatewayIntentBits, Collection, Partials, REST, Routes, Events } 
 const { token, clientId, guildId } = require("./config.json");
 const fs = require("node:fs");
 const path = require("node:path");
-
 require("./database/db.check.js");
 
 //create a client instance
@@ -23,7 +22,7 @@ const client = new Client({
   ],
 });
 
-
+//Create the collection of commands
 client.commands = new Collection();
 const commandsPath = path.join(__dirname, 'commands');
 const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
@@ -34,12 +33,10 @@ for (const file of commandFiles) {
 	client.commands.set(command.data.name, command);
 }
 
-require("./deploy-commands");
-
 // Construct and prepare an instance of the REST module
 const rest = new REST({ version: '10' }).setToken(token);
 
-
+//Setup handhelded events
 const eventsPath = path.join(__dirname, 'events');
 const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'));
 
@@ -52,6 +49,9 @@ for (const file of eventFiles) {
 		client.on(event.name, (...args) => event.execute(...args));
 	}
 }
+
+//deploy bot's commands
+require("./deploy-commands");
 
 // Log in to Discord with the client's token
 client.login(token);
