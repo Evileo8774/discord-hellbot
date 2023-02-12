@@ -15,7 +15,7 @@ connection.connect(function(err){
 
 function connect(){
     return mysql.createConnection({
-        host : "192.168.1.22",
+        host : "127.0.0.1",
         port : "3306",
         user : "hellbot",
         password : "hellbot",
