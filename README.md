@@ -22,7 +22,7 @@ A configurable multitask bot I developed for my [Discord server](https://discord
 
 ### Help for games
 
-- `phasmo [category] [target]` gets information on a Google Doc I wrote and writes it on Discord
+- `/phasmo [category] [target]` gets information on a Google Doc I wrote and writes it on Discord (Game : [Phasmophobia](https://store.steampowered.com/app/739630/Phasmophobia/)
 
 ### Temp voice channels
 
