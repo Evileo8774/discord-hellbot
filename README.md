@@ -1,6 +1,6 @@
 # hellBot
 
-A configurable multitask bot I developed for my [Discord server](https://discord.gg/M9CvPvd42H) and my friend's ones
+A configurable multitask bot I developed for my [Discord server](https://discord.gg/M9CvPvd42H) and my friends's ones
 
 # Features
 
