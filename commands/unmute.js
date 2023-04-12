@@ -1,10 +1,11 @@
 const { SlashCommandBuilder, PermissionsBitField, EmbedBuilder } = require("discord.js");
+const consts = require("../constants");
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("unmute")
 		.setDescription("Enlève le mute d'un membre")
-        .setDefaultMemberPermissions(PermissionsBitField.Flags.MuteMembers | PermissionsBitField.Flags.KickMembers | PermissionsBitField.Flags.BanMembers)
+        .setDefaultMemberPermissions(PermissionsBitField.Flags.MuteMembers)
         .addUserOption( (option) =>
             option
             .setName("membre")
@@ -24,7 +25,7 @@ module.exports = {
                 embeds: [{
                     title: `Erreur !`,
                     description: `Je ne possède pas les droits pour mute un membre`,
-                    color: 0xFF0000
+                    color: consts.EMBEDCOLOR
                 }],
                 ephemeral: true
             });
@@ -45,7 +46,7 @@ module.exports = {
                 embeds: [{
                     title: `Commande refusée : Permissions insuffisantes`,
                     description: `Tu ne peux pas unmute un membre ayant un rôle égal ou supérieur au tien`,
-                    color: 0xFF0000
+                    color: consts.EMBEDCOLOR
                 }],
                 ephemeral: true
             });
@@ -54,14 +55,14 @@ module.exports = {
         //untimeout
         memberToUnmute.timeout(null, "unmute").then(member => {
             const replyEmbed = new EmbedBuilder()
-            .setColor(0xFF0000)
+            .setColor(consts.EMBEDCOLOR)
             .setTitle("unmute")
             .setAuthor({name: `Par: ${interaction.user.username}`})
             .addFields(
                 { name: `${memberToUnmute.user.username}`, value : `a de nouveau le droit de parler` },
             )
             .setTimestamp()
-            .setFooter({text: "hellBot by @Evileo#6462"});
+            .setFooter({text: consts.EMBEDFOOTER});
 
             return interaction.reply({embeds: [replyEmbed]});
         }).catch(console.error);

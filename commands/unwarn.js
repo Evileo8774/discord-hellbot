@@ -1,4 +1,5 @@
 const { SlashCommandBuilder, PermissionsBitField, EmbedBuilder, RoleManager } = require("discord.js");
+const consts = require("../constants");
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -12,9 +13,6 @@ module.exports = {
             .setRequired(true)
         ),
 	async execute(interaction) {
-		
-        //bot's owner ID
-        const ownerID = "398358008838488077";
 
         //get values
         const memberToUnwarn = interaction.options.getMember("membre");
@@ -25,7 +23,7 @@ module.exports = {
                 embeds: [{
                     title: `Erreur !`,
                     description: `Je ne possède pas les droits pour unwarn un membre`,
-                    color: 0xFF0000
+                    color: consts.EMBEDCOLOR
                 }],
                 ephemeral: true
             });
@@ -46,7 +44,7 @@ module.exports = {
                 embeds: [{
                     title: `Commande refusée : Permissions insuffisantes`,
                     description: `Tu ne peux pas warn un membre ayant un rôle égal ou supérieur au tien`,
-                    color: 0xFF0000
+                    color: consts.EMBEDCOLOR
                 }],
                 ephemeral: true
             });
@@ -66,14 +64,14 @@ module.exports = {
         memberToUnwarn.roles.remove(warned);
                 
         const replyEmbed = new EmbedBuilder()
-        .setColor(0xFF0000)
+        .setColor(consts.EMBEDCOLOR)
         .setTitle("unmute")
         .setAuthor({name: `Par: ${interaction.user.username}`})
         .addFields(
             { name: `${memberToUnwarn.user.username}`, value : `a perdu un role, dommage` }
         )
         .setTimestamp()
-        .setFooter({text: "hellBot by @Evileo#6462"});
+        .setFooter({text: consts.EMBEDFOOTER});
         
         return interaction.reply({embeds: [replyEmbed]});
             

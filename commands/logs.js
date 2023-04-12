@@ -1,13 +1,14 @@
 const { SlashCommandBuilder,  PermissionsBitField, EmbedBuilder } = require("discord.js");
 const mysql = require("mysql");
 const { connect } = require("../database/db.connection");
+const consts = require("../constants");
 
 const connection = connect();
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("logs")
-		.setDescription("Permet de visualiser tous les mutes qu'a pris un membre")
+		.setDescription("Permet de visualiser toutes les sanctions d'un membre")
         .setDefaultMemberPermissions(PermissionsBitField.Flags.ViewAuditLog)
         .addUserOption( (option) =>
             option
@@ -29,9 +30,6 @@ module.exports = {
             )
         ),
 	async execute(interaction) {
-		
-        //bot's owner ID
-        const ownerID = "398358008838488077";
 
         //get values
         const memberLogs = interaction.options.getMember("membre");
@@ -43,7 +41,7 @@ module.exports = {
                 embeds: [{
                     title: `Erreur !`,
                     description: `Je ne possède pas les droits pour accéder aux logs d'un membre`,
-                    color: 0xFF0000
+                    color: consts.EMBEDCOLOR
                 }],
                 ephemeral: true
             });
@@ -65,7 +63,7 @@ module.exports = {
             connection.connect(function(err){
                 if (err) throw err;
                 //Database management requests
-                connection.query("SELECT type, reason FROM sanctions WHERE target = '"+memberLogs+"' AND server = '"+interaction.guild.id+"'", function (err, result, fields) {
+                connection.query("SELECT type, reason FROM hellbot-sanctions WHERE target = '"+memberLogs+"' AND server = '"+interaction.guild.id+"'", function (err, result, fields) {
                     if (err) throw err;
                     
                     //loop on results
@@ -105,16 +103,16 @@ module.exports = {
                     if(moreThanOneEmbed == false){
                         if(totalCount == 0){
                             const replyEmbed = new EmbedBuilder()
-                            .setColor(0xFF0000)
+                            .setColor(consts.EMBEDCOLOR)
                             .setTitle(`${memberLogs.user.username} a pris ${totalCount} sanctions ces 365 derniers jours`)
                             .setDescription("Félicitations !")
                             .setAuthor({name: `Par: ${interaction.user.username}`})
                             .setTimestamp()
-                            .setFooter({text: "hellBot by @Evileo#6462"});
+                            .setFooter({text: consts.EMBEDFOOTER});
                             return interaction.reply({embeds: [replyEmbed]});
                         } else {
                             const replyEmbed = new EmbedBuilder()
-                            .setColor(0xFF0000)
+                            .setColor(consts.EMBEDCOLOR)
                             .setTitle(`${memberLogs.user.username} a pris ${totalCount} sanctions ces 365 derniers jours`)
                             .setAuthor({name: `Par: ${interaction.user.username}`})
                             .addFields(
@@ -125,7 +123,7 @@ module.exports = {
                                 { name: `Raisons`, value : `${reasons[0]}` }
                             )
                             .setTimestamp()
-                            .setFooter({text: "hellBot by @Evileo#6462"});
+                            .setFooter({text: consts.EMBEDFOOTER});
                             return interaction.reply({embeds: [replyEmbed]});
                         }
                         
@@ -133,7 +131,7 @@ module.exports = {
                         for(i = 0; i <= reasonsIndex; i++){
                             if(i == 0){
                                 const replyEmbed = new EmbedBuilder()
-                                .setColor(0xFF0000)
+                                .setColor(consts.EMBEDCOLOR)
                                 .setTitle(`${memberLogs.user.username} a pris ${totalCount} sanctions ces 365 derniers jours`)
                                 .setAuthor({name: `Par: ${interaction.user.username}`})
                                 .addFields(
@@ -144,11 +142,11 @@ module.exports = {
                                     { name: `Raisons`, value : `${reasons[0]}` }
                                 )
                                 .setTimestamp()
-                                .setFooter({text: "hellBot by @Evileo#6462"});
+                                .setFooter({text: consts.EMBEDFOOTER});
                                 interaction.message.send({embeds: [replyEmbed]});
                             } else {
                                 const replyEmbed = new EmbedBuilder()
-                                .setColor(0xFF0000)
+                                .setColor(consts.EMBEDCOLOR)
                                 .setDescription(reasons[i]);
 
                                 interaction.message.send({embeds: [replyEmbed]});
@@ -163,7 +161,7 @@ module.exports = {
             connection.connect(function(err){
                 if (err) throw err;
                 
-                connection.query("SELECT reason FROM sanctions WHERE target = '"+memberLogs+"' AND type = '"+logType+"' AND server = '"+interaction.guild.id+"'", function (err, result, fields) {
+                connection.query("SELECT reason FROM hellbot-sanctions WHERE target = '"+memberLogs+"' AND type = '"+logType+"' AND server = '"+interaction.guild.id+"'", function (err, result, fields) {
                     if (err) throw err;
                     
                     for(i = 0; i < result.length; i++){
@@ -181,23 +179,23 @@ module.exports = {
                     if(moreThanOneEmbed == false){
                         if(totalCount == 0){
                             const replyEmbed = new EmbedBuilder()
-                            .setColor(0xFF0000)
+                            .setColor(consts.EMBEDCOLOR)
                             .setTitle(`${memberLogs.user.username} a pris ${totalCount} ${logType} ces 365 derniers jours`)
                             .setDescription("Félicitations !")
                             .setAuthor({name: `Par: ${interaction.user.username}`})
                             .setTimestamp()
-                            .setFooter({text: "hellBot by @Evileo#6462"});
+                            .setFooter({text: consts.EMBEDFOOTER});
                             return interaction.reply({embeds: [replyEmbed]});
                         } else {
                             const replyEmbed = new EmbedBuilder()
-                            .setColor(0xFF0000)
+                            .setColor(consts.EMBEDCOLOR)
                             .setTitle(`${memberLogs.user.username} a pris ${totalCount} ${logType} ces 365 derniers jours`)
                             .setAuthor({name: `Par: ${interaction.user.username}`})
                             .addFields(
                                 { name: `Raisons`, value : `${reasons[0]}` }
                             )
                             .setTimestamp()
-                            .setFooter({text: "hellBot by @Evileo#6462"});
+                            .setFooter({text: consts.EMBEDFOOTER});
                             return interaction.reply({embeds: [replyEmbed]});
                         }
                         
@@ -205,18 +203,18 @@ module.exports = {
                         for(i = 0; i <= reasonsIndex; i++){
                             if(i == 0){
                                 const replyEmbed = new EmbedBuilder()
-                                .setColor(0xFF0000)
+                                .setColor(consts.EMBEDCOLOR)
                                 .setTitle(`${memberLogs.user.username} a pris ${totalCount} ${logType} ces 365 derniers jours`)
                                 .setAuthor({name: `Par: ${interaction.user.username}`})
                                 .addFields(
                                     { name: `Raisons`, value : `${reasons[0]}` }
                                 )
                                 .setTimestamp()
-                                .setFooter({text: "hellBot by @Evileo#6462"});
+                                .setFooter({text: consts.EMBEDFOOTER});
                                 interaction.message.send({embeds: [replyEmbed]});
                             } else {
                                 const replyEmbed = new EmbedBuilder()
-                                .setColor(0xFF0000)
+                                .setColor(consts.EMBEDCOLOR)
                                 .setDescription(reasons[i]);
 
                                 interaction.message.send({embeds: [replyEmbed]});

@@ -1,4 +1,5 @@
 const { SlashCommandBuilder,  PermissionsBitField, EmbedBuilder, AuditLogEvent, Events, ChannelType } = require("discord.js");
+const consts = require("../constants");
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -24,19 +25,18 @@ module.exports = {
             )
         ),
 	async execute(interaction) {
-		
-        //bot's owner ID
-        const ownerID = "398358008838488077";
 
         //get values
         const command = interaction.options.getString("commande");
 
+        console.log(consts.EMBEDFOOTER)
+
         var replyEmbed = new EmbedBuilder()
-        .setColor(0xFF0000)
+        .setColor(consts.EMBEDCOLOR)
         .setTitle(`Aide ${command}`)
         .setAuthor({name: `Par: ${interaction.user.username}`})
         .setTimestamp()
-        .setFooter({text: "hellBot by @Evileo#6462"});
+        .setFooter({text: consts.EMBEDFOOTER});
 
         switch(command){
             case "ban":

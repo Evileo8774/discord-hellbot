@@ -1,4 +1,5 @@
 const { SlashCommandBuilder,  PermissionsBitField, EmbedBuilder, ChannelType } = require("discord.js");
+const consts = require("../constants");
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -30,7 +31,7 @@ module.exports = {
                 embeds: [{
                     title: `Erreur !`,
                     description: `Je ne possède pas les droits pour créer des channels`,
-                    color: 0xFF0000
+                    color: consts.EMBEDCOLOR
                 }],
                 ephemeral: true
             });
@@ -47,11 +48,11 @@ module.exports = {
 
         //confirms to the user the channel has been created
         const replyEmbed = new EmbedBuilder()
-        .setColor(0xFF0000)
+        .setColor(consts.EMBEDCOLOR)
         .setTitle(`Le salon vocal ${channelName} a bien été créé`)
         .setAuthor({name: `Par: ${interaction.user.username}`})
         .setTimestamp()
-        .setFooter({text: "hellBot by @Evileo#6462"});
+        .setFooter({text: consts.EMBEDFOOTER});
             
         return interaction.reply({embeds: [replyEmbed]});
             
