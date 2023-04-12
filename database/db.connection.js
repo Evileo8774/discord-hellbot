@@ -17,9 +17,9 @@ function connect(){
     return mysql.createConnection({
         host : "127.0.0.1",
         port : "3306",
-        user : "hellbot",
-        password : "hellbot",
-        database : "discord-hellbot",
+        user : "root",
+        password : "",
+        database : "hell_factory",
         charset : "utf8"
     });
 }
