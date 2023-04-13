@@ -78,7 +78,7 @@ module.exports = {
         connection.connect(function(err){
             if (err) throw err;
             //Database management requests
-            connection.query("INSERT INTO hellbot-sanctions(server, target, executor, type, reason, date) VALUES ('"+interaction.guild+"', '"+memberToBan+"', '"+interaction.user.id+"', 'ban', '"+reason+"', '"+today.toISOString().slice(0,10)+"')", function (err) {
+            connection.query("INSERT INTO hellbot_sanctions(server_id, target_id, executor_id, type, reason, sanctionDate) VALUES ('"+interaction.guild+"', '"+memberToBan+"', '"+interaction.user.id+"', 'ban', '"+reason+"', '"+today.toISOString().slice(0,10)+"')", function (err) {
                 if (err) throw err;
             });
             connection.end();

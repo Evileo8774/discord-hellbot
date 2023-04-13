@@ -8,7 +8,7 @@ const connection = connect();
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("logs")
-		.setDescription("Permet de visualiser toutes les sanctions d'un membre")
+		.setDescription("Affiche les sanctions d'un membre")
         .setDefaultMemberPermissions(PermissionsBitField.Flags.ViewAuditLog)
         .addUserOption( (option) =>
             option
@@ -63,7 +63,7 @@ module.exports = {
             connection.connect(function(err){
                 if (err) throw err;
                 //Database management requests
-                connection.query("SELECT type, reason FROM hellbot-sanctions WHERE target = '"+memberLogs+"' AND server = '"+interaction.guild.id+"'", function (err, result, fields) {
+                connection.query("SELECT type, reason FROM hellbot_sanctions WHERE target_id = '"+memberLogs+"' AND server_id = '"+interaction.guild.id+"'", function (err, result, fields) {
                     if (err) throw err;
                     
                     //loop on results
@@ -104,7 +104,7 @@ module.exports = {
                         if(totalCount == 0){
                             const replyEmbed = new EmbedBuilder()
                             .setColor(consts.EMBEDCOLOR)
-                            .setTitle(`${memberLogs.user.username} a pris ${totalCount} sanctions ces 365 derniers jours`)
+                            .setTitle(`${memberLogs.user.username} a pris ${totalCount} sanctions`)
                             .setDescription("Félicitations !")
                             .setAuthor({name: `Par: ${interaction.user.username}`})
                             .setTimestamp()
@@ -113,13 +113,13 @@ module.exports = {
                         } else {
                             const replyEmbed = new EmbedBuilder()
                             .setColor(consts.EMBEDCOLOR)
-                            .setTitle(`${memberLogs.user.username} a pris ${totalCount} sanctions ces 365 derniers jours`)
+                            .setTitle(`${memberLogs.user.username} a pris ${totalCount} sanctions`)
                             .setAuthor({name: `Par: ${interaction.user.username}`})
                             .addFields(
-                                { name: `Nombre de bans pris`, value : `${banCount}`, inline: true },
-                                { name: `Nombre de kicks pris`, value : `${kickCount}`, inline: true },
-                                { name: `Nombre de mutes pris`, value : `${muteCount}`, inline: true },
-                                { name: `Nombre de warns pris`, value : `${warnCount}`, inline: true },
+                                { name: `bans`, value : `${banCount}`, inline: true },
+                                { name: `kicks`, value : `${kickCount}`, inline: true },
+                                { name: `mutes`, value : `${muteCount}`, inline: true },
+                                { name: `warns`, value : `${warnCount}`, inline: true },
                                 { name: `Raisons`, value : `${reasons[0]}` }
                             )
                             .setTimestamp()
@@ -132,13 +132,13 @@ module.exports = {
                             if(i == 0){
                                 const replyEmbed = new EmbedBuilder()
                                 .setColor(consts.EMBEDCOLOR)
-                                .setTitle(`${memberLogs.user.username} a pris ${totalCount} sanctions ces 365 derniers jours`)
+                                .setTitle(`${memberLogs.user.username} a pris ${totalCount} sanctions`)
                                 .setAuthor({name: `Par: ${interaction.user.username}`})
                                 .addFields(
-                                    { name: `Nombre de bans pris`, value : `${banCount}`, inline: true },
-                                    { name: `Nombre de kicks pris`, value : `${kickCount}`, inline: true },
-                                    { name: `Nombre de mutes pris`, value : `${muteCount}`, inline: true },
-                                    { name: `Nombre de warns pris`, value : `${warnCount}`, inline: true },
+                                    { name: `bans`, value : `${banCount}`, inline: true },
+                                    { name: `kicks`, value : `${kickCount}`, inline: true },
+                                    { name: `mutes`, value : `${muteCount}`, inline: true },
+                                    { name: `warns`, value : `${warnCount}`, inline: true },
                                     { name: `Raisons`, value : `${reasons[0]}` }
                                 )
                                 .setTimestamp()
@@ -161,7 +161,7 @@ module.exports = {
             connection.connect(function(err){
                 if (err) throw err;
                 
-                connection.query("SELECT reason FROM hellbot-sanctions WHERE target = '"+memberLogs+"' AND type = '"+logType+"' AND server = '"+interaction.guild.id+"'", function (err, result, fields) {
+                connection.query("SELECT reason FROM hellbot_sanctions WHERE target_id = '"+memberLogs+"' AND type = '"+logType+"' AND server_id = '"+interaction.guild.id+"'", function (err, result, fields) {
                     if (err) throw err;
                     
                     for(i = 0; i < result.length; i++){
@@ -180,7 +180,7 @@ module.exports = {
                         if(totalCount == 0){
                             const replyEmbed = new EmbedBuilder()
                             .setColor(consts.EMBEDCOLOR)
-                            .setTitle(`${memberLogs.user.username} a pris ${totalCount} ${logType} ces 365 derniers jours`)
+                            .setTitle(`${memberLogs.user.username} a pris ${totalCount} ${logType}`)
                             .setDescription("Félicitations !")
                             .setAuthor({name: `Par: ${interaction.user.username}`})
                             .setTimestamp()
@@ -189,7 +189,7 @@ module.exports = {
                         } else {
                             const replyEmbed = new EmbedBuilder()
                             .setColor(consts.EMBEDCOLOR)
-                            .setTitle(`${memberLogs.user.username} a pris ${totalCount} ${logType} ces 365 derniers jours`)
+                            .setTitle(`${memberLogs.user.username} a pris ${totalCount} ${logType}`)
                             .setAuthor({name: `Par: ${interaction.user.username}`})
                             .addFields(
                                 { name: `Raisons`, value : `${reasons[0]}` }
@@ -204,7 +204,7 @@ module.exports = {
                             if(i == 0){
                                 const replyEmbed = new EmbedBuilder()
                                 .setColor(consts.EMBEDCOLOR)
-                                .setTitle(`${memberLogs.user.username} a pris ${totalCount} ${logType} ces 365 derniers jours`)
+                                .setTitle(`${memberLogs.user.username} a pris ${totalCount} ${logType}`)
                                 .setAuthor({name: `Par: ${interaction.user.username}`})
                                 .addFields(
                                     { name: `Raisons`, value : `${reasons[0]}` }
