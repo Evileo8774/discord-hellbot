@@ -27,8 +27,7 @@ module.exports = {
                     bitrate: 66666
                 });
             } else if(joinedChannel.bitrate == 66665){ //common voice channels
-                const channelName = "temp-"+joinedChannel.name;
-
+                channelName = newVoiceState.member.user.tag;
                 //create the temp channel
                 createVoice = await newVoiceState.guild.channels.create({
                     name: channelName,
